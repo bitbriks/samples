@@ -1,10 +1,31 @@
+
+
 class TodoApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = { items: [], text: '' };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.rpc = new Rpc();
+    this.fetch();
   }
+
+  fetch() {
+    var params = {
+        model: 'todo.todo',
+        context: {lang:"en_US",tz:"Europe/Brussels",uid:2},
+        method: 'search_read',
+        fields: ['id', 'name']
+    };
+    this.rpc.query(params)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(e => {
+        console.error(e);
+      });
+  }
+
 
   render() {
     return (

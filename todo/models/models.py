@@ -7,11 +7,10 @@ from subprocess import Popen, PIPE
 from odoo.tools import misc
 import logging
 _logger = logging.getLogger(__name__)
-# class todo(models.Model):
-#     _name = 'todo.todo'
 
-#     name = fields.Char()
-#     value = fields.Integer()
+class todo(models.Model):
+    _name = 'todo.todo'
+    name = fields.Char(string='Content')
 #     value2 = fields.Float(compute="_value_pc", store=True)
 #     description = fields.Text()
 #
@@ -39,6 +38,18 @@ class BabelJavascriptAsset(JavascriptAsset):
                 cmd_output = u"Process exited with return code %d\n" % compiler.returncode
             raise CompileError(cmd_output)
         return out.decode('utf8')
+
+    # def to_node(self):
+    #     if self.url:
+    #         return ("script", OrderedDict([
+    #             ["type", "text/javascript"],
+    #             ["src", self.html_url],
+    #         ]), None)
+    #     else:
+    #         return ("script", OrderedDict([
+    #             ["type", "text/javascript"],
+    #             ["charset", "utf-8"],
+    #         ]), self.with_header())
 
 class AssetsBundleBabel(AssetsBundle):
 
@@ -73,11 +84,12 @@ class AssetsBundleBabel(AssetsBundle):
     def js(self):
         # to override to run transpiler
         attachments = self.get_attachments('js')
-        if not attachments:
+        if not attachments or True:
             content = ';\n'.join([asset.minify() for asset in self.javascripts if not isinstance(asset, BabelJavascriptAsset)])      
             # append transpiled js at the end
             # this part needs improvement      
             content = content + ';\n' + self.transpile_babel()
+            # print('---', content)
             return self.save_attachment('js', content)
         return attachments[0] 
 

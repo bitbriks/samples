@@ -20,7 +20,8 @@
         <!-- </template> -->
 
         <template id="assets" name="todo assets">
-            <script type="text/babel" src="/todo/static/src/jsx/main.jsx"></script>
+            <script type="text/javascript" src="/todo/static/src/js/service.js"></script>
+            <script type="text/javascript" src="/todo/static/src/jsx/main.jsx"></script>
         </template>
 
         <template id="index" name="todo index">&lt;!DOCTYPE html&gt;
@@ -42,7 +43,6 @@
                         csrf_token: "<t t-esc="request.csrf_token(None)"/>",
                         session_info: <t t-raw="session_info"/>,
                     };
-                    console.log('init');
                 </script>
             </head>
             <body>
