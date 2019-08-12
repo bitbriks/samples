@@ -1,0 +1,1 @@
+Odoo preact example module

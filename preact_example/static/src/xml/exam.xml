@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!--
+        Examl template
+
+        @param {mail.discuss} widget
+    -->
+    <t t-name="preact_example.template">
+        <div class="o_view_controller">
+        </div>
+    </t>
+</templates>

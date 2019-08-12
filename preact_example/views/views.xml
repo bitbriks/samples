@@ -1,0 +1,77 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="beolla_exam.list">
+      <field name="name">beolla_exam list</field>
+      <field name="model">beolla_exam.beolla_exam</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="beolla_exam.action_window">
+      <field name="name">beolla_exam window</field>
+      <field name="res_model">beolla_exam.beolla_exam</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="beolla_exam.action_server">
+      <field name="name">beolla_exam server</field>
+      <field name="model_id" ref="model_beolla_exam_beolla_exam"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="beolla_exam" id="beolla_exam.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="beolla_exam.menu_1" parent="beolla_exam.menu_root"/>
+    <menuitem name="Menu 2" id="beolla_exam.menu_2" parent="beolla_exam.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="beolla_exam.menu_1_list" parent="beolla_exam.menu_1"
+              action="beolla_exam.action_window"/>
+    <menuitem name="Server to list" id="beolla_exam" parent="beolla_exam.menu_2"
+              action="beolla_exam.action_server"/>
+    -->
+    <record id="action_preact" model="ir.actions.client">
+        <field name="name">Online Test</field>
+        <field name="tag">preact_example.example</field>
+        <field name="res_model">preact_example.exam</field>
+        <field name="params" eval="&quot;{
+            'default_active_id': 'mailbox_inbox'
+        }&quot;"/>
+    </record>
+
+    <menuitem
+        id="preact_example.menu_root_discuss"
+        name="Preact Example"
+        action="action_preact"
+        web_icon="mail,static/description/icon.png"
+        groups="base.group_user"
+        sequence="1"/>
+
+  </data>
+</odoo>
