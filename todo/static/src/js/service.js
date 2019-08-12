@@ -142,6 +142,17 @@ class Rpc {
             };
         console.log(query);
         payload = Object.assign(Object.assign({}, options), payload);
-        return fetch(query.route, payload);
+        return new Promise((resolve, reject) => {
+            fetch(query.route, payload).then(res => res.json()).then(jsonRes => {
+                console.log(jsonRes);
+                if (jsonRes.error) {
+                    reject(jsonRes.error);
+                }
+                else {
+                    resolve(jsonRes.result);
+                }
+            }).catch(reject);
+
+        });
     }
 }

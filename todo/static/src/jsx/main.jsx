@@ -7,22 +7,55 @@ class TodoApp extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.rpc = new Rpc();
+
+    this.model = 'todo.todo';
+    this.context = {lang:"en_US",tz:"Europe/Brussels",uid:2};
+
     this.fetch();
+    
   }
 
   fetch() {
     var params = {
-        model: 'todo.todo',
-        context: {lang:"en_US",tz:"Europe/Brussels",uid:2},
+        model: this.model,
+        context: this.context,
         method: 'search_read',
         fields: ['id', 'name']
     };
+
     this.rpc.query(params)
-      .then(res => {
-        console.log(res);
+      .then(res => {        
+        let items = [];
+        for (let i = 0; i < res.length; i ++) {
+          items.push({id: res[i].id, text: res[i].name});
+        }
+
+        this.setState(state => ({
+          items: items,
+          text: ''
+        }));
       })
       .catch(e => {
         console.error(e);
+      });
+  }
+
+  save_to_server(newItem) {
+    let args = [
+      {name: newItem.text}
+    ];
+
+    let params = {
+      model: this.model,
+      method: 'create',
+      args: args,
+      kwargs: {
+        context: this.context
+      }
+    }
+    this.rpc.query(params)
+      .then(res => {
+        console.log(res);
       });
   }
 
@@ -66,6 +99,7 @@ class TodoApp extends React.Component {
       items: state.items.concat(newItem),
       text: ''
     }));
+    this.save_to_server(newItem);
   }
 }
 
